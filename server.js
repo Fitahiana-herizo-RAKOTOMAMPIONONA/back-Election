@@ -23,7 +23,6 @@ app.post("/register", (req, res) => {
     if (erreur) {
       return res.status(500).json({ error: "Erreur de hachage du mot de passe" })
     }
-
     const values = [
         req.body.nom, 
         req.body.email, 
@@ -50,7 +49,7 @@ app.post("/verifier", (req, res) => {
                 return res.status(500).json({error: "Erreur lors du comparaison du mot de passe"})
               }
               if (result) {
-                return res.status(200).json({success: "succes"})
+                return res.status(200).json({success: "success"})
               }else{
                 return res.status(500).json({error: "Mot de passe Incorrect"}) 
               }
