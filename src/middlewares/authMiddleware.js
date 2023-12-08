@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 
-const verifierUser  = async (req,res,next) =>{
-    const token= req.cookie.token
+const verifierUser  = (req,res,next) =>{
+    const token = req.cookies.token
     if(!token){
       return res.json({error: "vous n'avez auccun access"})
     }else{
