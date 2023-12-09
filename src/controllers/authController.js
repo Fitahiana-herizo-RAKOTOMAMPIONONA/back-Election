@@ -9,7 +9,7 @@ const enregistrerUser = async (req, res) => {
       const sql = "INSERT INTO user (nom, email, motDePasse) VALUES (?, ?, ?)";
       const hash = bcrypt.hashSync(req.body.motDePasse.toString(), Number(cle));
       const values = [req.body.nom, req.body.email, hash];
-      const resultat = await db.queryAsync(sql, values);
+      const resultat = await db.queryAsynchrone(sql, values);
       if (resultat) {
         return res.status(200).json({ success: "Enregistrement avec succès" });
       } else {
@@ -20,7 +20,8 @@ const enregistrerUser = async (req, res) => {
       return res.status(500).json({ error: "Erreur de cryptage du mot de passe" });
     }
   };
-  db.queryAsync = (sql, values) => {
+
+  db.queryAsynchrone = (sql, values) => {
     return new Promise((resolve, reject) => {
       db.query(sql, values, (erreur, resultat) => {
         if (erreur) {
