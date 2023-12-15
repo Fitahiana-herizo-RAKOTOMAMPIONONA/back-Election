@@ -48,7 +48,7 @@ const verificationConnexion = async (req, res) => {
         }
         if (result) {
           const nom = resultat[0].nom;
-          const token = jwt.sign({ nom }, "jwt-secret-key", /*{ expiresIn: "1d" }*/);
+          const token = jwt.sign({ nom }, process.env.JWT_SECRET);
           const cookieOptions = {
             httpOnly: true,
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000),

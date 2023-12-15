@@ -1,7 +1,8 @@
 import express,{json} from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import router from "./src/routes/routes.js";
+import userRouter from "./src/routes/userRoutes.js";
+import scrutinRouter from "./src/routes/scrutinRoutes.js";
 // import bodyParser from "body-parser";
 
 const app = express();
@@ -13,12 +14,12 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.json());
+app.use(express.json()); 
 app.use(cookieParser());
 
 
-app.use('/', router)
-
+app.use('/', userRouter)
+app.use('/',scrutinRouter)
 
 app.listen(port, () => {
   console.log("En attente des requêtes au port " + port);
