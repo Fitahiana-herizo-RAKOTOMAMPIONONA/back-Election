@@ -18,7 +18,6 @@ const sql3 = `CREATE TABLE IF NOT EXISTS user(
     nom VARCHAR(255),
     email VARCHAR(255),
     motDePasse TEXT);`
-
 const sql4 = `CREATE TABLE IF NOT EXISTS scrutin(
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255),
@@ -27,9 +26,11 @@ const sql4 = `CREATE TABLE IF NOT EXISTS scrutin(
     type VARCHAR(255),
     votantMax INT,
     nombreVotants INT,
+    debutTemps TIME,
+    finTemps TIME,
     statistiqueVotants INT,
-    minuteCoule INT);`
-db.query(sql,(erreur, resultat)=>{   
+    minuteCoule INT);` 
+db.query(sql,(erreur, resultat)=>{     
     if( erreur){
         console.error("erreur lors de creation du database" + erreur) 
     }else if(!resultat){

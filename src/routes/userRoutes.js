@@ -4,7 +4,7 @@ import { verificationConnexion,verifier,enregistrerUser } from "../controllers/a
 
 const userRouter = express.Router()
 
-userRouter.get("/",verifierUser,verifier)
+userRouter.get("/user/estConnecte",verifierUser,verifier)
 userRouter.post("/user/verifier",verificationConnexion)
 userRouter.post("/user/register",enregistrerUser)
 
