@@ -34,10 +34,16 @@ db.queryAsync = (sql,values) => {
 
 const getScrutin = async (req,res) =>{
     try{
-        
+        const id = req.params.id
+        const sql= "SELECT * FROM scrutin WHERE id = ?;"
+        db.query(sql,id,(erreur,resultat)=>{
+            if(erreur) return res.status(400).json({error : "erreur lors du get"})
+            else if (resultat && resultat.length > 0 ) return res.status(200).json(resultat[0])
+            else res.status(404).json({error : "Auccun scrutin trouve"})
+        })
     }catch (erreur){
         console.log("erreur lors du getScrutin" + erreur.message)
-        res.status(400).json({error : erreur})
+        res.status(400).json({error : erreur, status : "erreur lors du getScrutin"})
     }
 }
 

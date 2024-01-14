@@ -13,12 +13,12 @@ const db = mysql.createConnection({
 const sql =`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME};`
 
 const sql2 = `USE ${process.env.DB_NAME}`
-const sql3 = `CREATE TABLE IF NOT EXISTS user(
+const user = `CREATE TABLE IF NOT EXISTS user(
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255),
     email VARCHAR(255),
     motDePasse TEXT);`
-const sql4 = `CREATE TABLE IF NOT EXISTS scrutin(
+const scrutin = `CREATE TABLE IF NOT EXISTS scrutin(
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255),
     date DATE,
@@ -30,6 +30,28 @@ const sql4 = `CREATE TABLE IF NOT EXISTS scrutin(
     finTemps TIME,
     statistiqueVotants INT,
     minuteCoule INT);` 
+
+const vote = `CREATE TABLE IF NOT EXISTS vote(
+    id_vote INT PRIMARY KEY,
+    id_utilisateur INT,
+    id_scrutin INT,
+    id_candidat INT,
+    FOREIGN KEY (id_utilisateur) REFERENCES user (id),
+    FOREIGN KEY (id_scrutin) REFERENCES scrutin (id),
+    FOREIGN KEY (id_candidat) REFERENCES candidat (id_candidat));` 
+const candidat = `CREATE TABLE IF NOT EXISTS candidat(
+    id_candidat INT PRIMARY KEY,
+    nom_candidat VARCHAR(255),
+    parti_politique VARCHAR(255),
+    profession VARCHAR(255),
+    slogan VARCHAR(255));` 
+const resultatTable = `CREATE TABLE IF NOT EXISTS resultat(
+    id_resultat INT PRIMARY KEY,
+    id_scrutin INT,
+    id_candidat INT,
+    FOREIGN KEY (id_scrutin) REFERENCES scrutin (id),
+    FOREIGN KEY (id_candidat) REFERENCES candidat (id_candidat));` 
+
 db.query(sql,(erreur, resultat)=>{     
     if( erreur){
         console.error("erreur lors de creation du database" + erreur) 
@@ -44,7 +66,7 @@ db.query(sql,(erreur, resultat)=>{
                 console.error("erreur lors de l'utilistation du database")
             }else{
                 console.log("utilisation database : " + process.env.DB_NAME)
-                db.query(sql3,(erreur, resultat)=>{
+                db.query(user,(erreur, resultat)=>{
                     if (erreur){
                         console.error("erreur lors de creation du table"+ erreur);
                     }else if(!resultat){
@@ -53,13 +75,40 @@ db.query(sql,(erreur, resultat)=>{
                         console.log("table user cree avec succes");
                     }
                 })
-                db.query(sql4,(erreur, resultat)=>{
+                db.query(scrutin,(erreur, resultat)=>{
                     if (erreur){
-                        console.error("erreur lors de creation du table"+ erreur);
+                        console.error("erreur lors de creation du table scrutin "+ erreur);
                     }else if(!resultat){
                         console.log("deja cree");
                     }else{
-                        console.log("table user cree avec succes");
+                        console.log("table scrutin cree avec succes");
+                    }
+                })
+                db.query(vote,(erreur, resultat)=>{
+                    if (erreur){
+                        console.error("erreur lors de creation du table vote "+ erreur);
+                    }else if(!resultat){
+                        console.log("deja cree");
+                    }else{
+                        console.log("table vote cree avec succes ");
+                    }
+                })
+                db.query(resultatTable,(erreur, resultat)=>{
+                    if (erreur){
+                        console.error("erreur lors de creation du table resultat "+ erreur);
+                    }else if(!resultat){
+                        console.log("deja cree");
+                    }else{
+                        console.log("table resultat cree avec succes ");
+                    }
+                })
+                db.query(candidat,(erreur, resultat)=>{
+                    if (erreur){
+                        console.error("erreur lors de creation du table candidat "+ erreur);
+                    }else if(!resultat){
+                        console.log("deja cree");
+                    }else{
+                        console.log("table candidat cree avec succes");
                     }
                 })
             }

@@ -3,7 +3,7 @@ import { creerScrutin ,getScrutin ,getALLScrutin } from "../controllers/scrutinC
 const scrutinRouter = express.Router()
 
 scrutinRouter.post('/scrutin/creer',creerScrutin)
-scrutinRouter.get('/scrutin/get',getScrutin)
+scrutinRouter.get('/scrutin/get/:id',getScrutin) 
 scrutinRouter.get('/scrutin/tout',getALLScrutin)
 
 export default scrutinRouter;
