@@ -2,7 +2,7 @@ import db from "../config/config.js";
 
 const creerScrutin = async (req,res) =>{
     try{
-        const sql = `INSERT INTO scrutin (nom,date,description,debutTemps,finTemps,type,votantMax,nombreVotants) VALUES (?,?,?,?,?,?,?,?)`
+        const sql = `INSERT INTO scrutin (nomScrutin,date,description,debutTemps,finTemps,type,votantMax,nombreVotants) VALUES (?,?,?,?,?,?,?,?)`
         const values= [
             req.body.nom,
             req.body.date,
@@ -15,7 +15,7 @@ const creerScrutin = async (req,res) =>{
         ]
         const resultat = await db.queryAsync(sql, values)
         if (!resultat ) return res.staus(500).json({error : "erreur lors de l'enregistrement"})
-        else  return res.staus(200).json({success : "enregistre avec success" ,status: "success"})
+        else  return res.status(200).json({success : "enregistre avec success" ,status: "success"})
     }catch (error){
         console.log("erreur de tentative d'enregistrement " + error.message)
         res.status(400).json({error :"erreur de tentative d'enregistrement"})
