@@ -19,7 +19,7 @@ const enregistrerUser = async (req, res) => {
       console.error("Erreur lors du cryptage du mot de passe:", error.message);
       return res.status(500).json({ error: "Erreur de cryptage du mot de passe" });
     }
-  };
+  }; 
 
   db.queryAsynchrone = (sql, values) => {
     return new Promise((resolve, reject) => {
@@ -68,4 +68,34 @@ const verifier = async (req, res) => {
   return res.json({ status: "success", nom: req.nom });
 };
 
-export { enregistrerUser, verificationConnexion, verifier };
+const getUserFromId = async (req,res) =>{
+  const id = [req.params.id]
+  try {
+    const sql ="SELECT * FROM user WHERE idUser = (?) ;"
+    db.query(sql,id,(erreur,resultat)=>{
+        if(erreur) return res.status(500).json({error: "auccun user trouvé"})
+        else if(!resultat) return res.status(404).json({error :"erreur lors du requete id"})
+        else return res.status(200).json(resultat[0])
+    })
+  } catch (error) {
+      console.log("error");
+  }
+}
+
+const getUserScrutinFromId = async (req,res) =>{
+  const id = [req.params.id]
+  console.log(id)
+  try {
+    // const sql ="SELECT * FROM user WHERE user.idUser = (?) ;"
+    const sql ="SELECT * FROM scrutin JOIN user ON scrutin.id_utilisateur = user.iduser WHERE user.idUser = (?);"
+    db.query(sql,id,(erreur,resultat)=>{
+        if(erreur) return res.status(500).json({error: "auccun user et scrutin trouvé"})
+        else if(!resultat) return res.status(404).json({error :"erreur lors du requete id"})
+        else return res.status(200).json(resultat)
+    })
+  } catch (error) {
+      console.log("error");
+  }
+}
+
+export { enregistrerUser, verificationConnexion, verifier ,getUserFromId ,getUserScrutinFromId};

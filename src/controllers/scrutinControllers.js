@@ -63,5 +63,20 @@ const getALLScrutin = async (req,res) =>{
         res.status(400).json({error : erreur})
     }
 }
+const getALLScrutinUser = async (req,res) =>{
+    try{
+        const sql = "SELECT * FROM scrutin LEFT JOIN user ON user.idUser = scrutin.Id_utilisateur"
+        db.query(sql,(erreur, resultat)=>{
+            if(erreur) return res.status(400).json({error : "erreur lors de getAllScrutin"})
+            else if (resultat){
+                return res.status(200).json(resultat)
+            }
+        })
+    }catch (erreur){
+        console.log("erreur lors du getALlScrutin" + erreur.message)
+        res.status(400).json({error : erreur})
+    }
+}
 
-export {creerScrutin,getScrutin,getALLScrutin}
+
+export {creerScrutin,getScrutin,getALLScrutin,getALLScrutinUser}

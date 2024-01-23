@@ -14,7 +14,7 @@ const sql =`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME};`
 
 const sql2 = `USE ${process.env.DB_NAME}`
 const user = `CREATE TABLE IF NOT EXISTS user(
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255),
     email VARCHAR(255),
     motDePasse TEXT);`
@@ -36,7 +36,7 @@ const vote = `CREATE TABLE IF NOT EXISTS vote(
     id_utilisateur INT,
     id_scrutin INT,
     id_candidat INT,
-    FOREIGN KEY (id_utilisateur) REFERENCES user (id),
+    FOREIGN KEY (id_utilisateur) REFERENCES user (idUser),
     FOREIGN KEY (id_scrutin) REFERENCES scrutin (id),
     FOREIGN KEY (id_candidat) REFERENCES candidat (id_candidat));` 
 const candidat = `CREATE TABLE IF NOT EXISTS candidat(
