@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 
 dotenv.config();
 
-const db = mysql.createConnection({
+const db =  mysql.createConnection({
     host : process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -42,7 +42,8 @@ const vote = `CREATE TABLE IF NOT EXISTS vote(
 const candidat = `CREATE TABLE IF NOT EXISTS candidat(
     id_candidat INT PRIMARY KEY,
     nom_candidat VARCHAR(255),
-    parti_politique VARCHAR(255),
+    prenom_candidat VARCHAR(255),
+    parti_politique VARCHAR(255), 
     profession VARCHAR(255),
     slogan VARCHAR(255));` 
 const resultatTable = `CREATE TABLE IF NOT EXISTS resultat(

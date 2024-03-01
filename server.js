@@ -7,14 +7,14 @@ import scrutinRouter from "./src/routes/scrutinRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 5000
-
+   
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:5173"],
   methods: ["POST", "GET"],
   credentials: true
 }));
 
-app.use(express.json()); 
+app.use(express.json());  
 app.use(cookieParser());
 
 
@@ -23,4 +23,4 @@ app.use('/',scrutinRouter)
 
 app.listen(port, () => {
   console.log("En attente des requêtes au port " + port);
-});
+}); 
