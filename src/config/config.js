@@ -12,7 +12,7 @@ const db =  mysql.createConnection({
 
 const sql =`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME};`
 
-const sql2 = `USE ${process.env.DB_NAME}`
+const sql2 = `USE ${process.env.DB_NAME}` 
 const user = `CREATE TABLE IF NOT EXISTS user(
     idUser INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255),
