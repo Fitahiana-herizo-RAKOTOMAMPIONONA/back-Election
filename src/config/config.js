@@ -8,19 +8,20 @@ const db =  mysql.createConnection({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME 
-})
+}) 
 
 const sql =`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME};`
 
-const sql2 = `USE ${process.env.DB_NAME}` 
+const sql2 = `USE ${process.env.DB_NAME};` 
 const user = `CREATE TABLE IF NOT EXISTS user(
     idUser INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255),
     email VARCHAR(255),
     motDePasse TEXT);`
-const scrutin = `CREATE TABLE IF NOT EXISTS scrutin(
+const scrutin = `CREATE TABLE IF NOT EXISTS scrutin (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255),
+    user INT,
+    nomScrutin VARCHAR(255),
     date DATE,
     description TEXT,
     type VARCHAR(255),
@@ -29,7 +30,10 @@ const scrutin = `CREATE TABLE IF NOT EXISTS scrutin(
     debutTemps TIME,
     finTemps TIME,
     statistiqueVotants INT,
-    minuteCoule INT);` 
+    minuteCoule INT,
+    FOREIGN KEY (user) REFERENCES user(idUser)
+);
+`  
 
 const vote = `CREATE TABLE IF NOT EXISTS vote(
     id_vote INT PRIMARY KEY,
@@ -55,11 +59,11 @@ const resultatTable = `CREATE TABLE IF NOT EXISTS resultat(
 
 db.query(sql,(erreur, resultat)=>{     
     if( erreur){
-        console.error("erreur lors de creation du database" + erreur) 
+        console.error("erreur lors de creation du database "  + erreur)
     }else if(!resultat){
         console.error("cette database est deja existe" , erreur)
     }else{
-        console.log("database cree avec suucees")
+        console.log( "database cree avec suucees")
         db.query(sql2, (erreur, resultat)=>{
             if(erreur){
                 console.error("erreur lors de l'utilistation du database")
@@ -76,6 +80,15 @@ db.query(sql,(erreur, resultat)=>{
                         console.log("table user cree avec succes");
                     }
                 })
+                db.query(candidat,(erreur, resultat)=>{
+                    if (erreur){
+                        console.error("erreur lors de creation du table candidat "+ erreur);
+                    }else if(!resultat){
+                        console.log("deja cree");
+                    }else{
+                        console.log("table candidat cree avec succes");
+                    }
+                })
                 db.query(scrutin,(erreur, resultat)=>{
                     if (erreur){
                         console.error("erreur lors de creation du table scrutin "+ erreur);
@@ -85,15 +98,7 @@ db.query(sql,(erreur, resultat)=>{
                         console.log("table scrutin cree avec succes");
                     }
                 })
-                db.query(vote,(erreur, resultat)=>{
-                    if (erreur){
-                        console.error("erreur lors de creation du table vote "+ erreur);
-                    }else if(!resultat){
-                        console.log("deja cree");
-                    }else{
-                        console.log("table vote cree avec succes ");
-                    }
-                })
+                
                 db.query(resultatTable,(erreur, resultat)=>{
                     if (erreur){
                         console.error("erreur lors de creation du table resultat "+ erreur);
@@ -103,13 +108,14 @@ db.query(sql,(erreur, resultat)=>{
                         console.log("table resultat cree avec succes ");
                     }
                 })
-                db.query(candidat,(erreur, resultat)=>{
+               
+                db.query(vote,(erreur, resultat)=>{
                     if (erreur){
-                        console.error("erreur lors de creation du table candidat "+ erreur);
+                        console.error("erreur lors de creation du table vote "+ erreur);
                     }else if(!resultat){
                         console.log("deja cree");
                     }else{
-                        console.log("table candidat cree avec succes");
+                        console.log("table vote cree avec succes ");
                     }
                 })
             }

@@ -65,7 +65,7 @@ const getALLScrutin = async (req,res) =>{
 }
 const getALLScrutinUser = async (req,res) =>{
     try{
-        const sql = "SELECT * FROM scrutin LEFT JOIN user ON user.idUser = scrutin.Id_utilisateur"
+        const sql = "SELECT * FROM scrutin LEFT JOIN user ON user.idUser = scrutin.user"
         db.query(sql,(erreur, resultat)=>{
             if(erreur) return res.status(400).json({error : "erreur lors de getAllScrutin"})
             else if (resultat){
