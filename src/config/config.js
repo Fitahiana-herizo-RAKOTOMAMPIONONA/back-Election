@@ -33,18 +33,18 @@ const scrutin = `CREATE TABLE IF NOT EXISTS scrutin (
     minuteCoule INT,
     FOREIGN KEY (user) REFERENCES user(idUser)
 );
-`  
+`   
 
 const vote = `CREATE TABLE IF NOT EXISTS vote(
     id_vote INT PRIMARY KEY,
     id_utilisateur INT,
     id_scrutin INT,
-    id_candidat INT,
+    id_candidat INT, 
     FOREIGN KEY (id_utilisateur) REFERENCES user (idUser),
     FOREIGN KEY (id_scrutin) REFERENCES scrutin (id),
     FOREIGN KEY (id_candidat) REFERENCES candidat (id_candidat));` 
 const candidat = `CREATE TABLE IF NOT EXISTS candidat(
-    id_candidat INT PRIMARY KEY,
+    id_candidat INT AUTO_INCREMENT PRIMARY KEY, 
     nom_candidat VARCHAR(255),
     prenom_candidat VARCHAR(255),
     parti_politique VARCHAR(255), 

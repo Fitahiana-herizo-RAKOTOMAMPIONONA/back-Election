@@ -87,7 +87,7 @@ const getUserScrutinFromId = async (req,res) =>{
   console.log(id)
   try {
     // const sql ="SELECT * FROM user WHERE user.idUser = (?) ;"
-    const sql ="SELECT * FROM scrutin JOIN user ON scrutin.id_utilisateur = user.iduser WHERE user.idUser = (?);"
+    const sql ="SELECT * FROM scrutin JOIN user ON scrutin.user = user.idUser WHERE user.idUser = (?);"
     db.query(sql,id,(erreur,resultat)=>{
         if(erreur) return res.status(500).json({error: "auccun user et scrutin trouvé"})
         else if(!resultat) return res.status(404).json({error :"erreur lors du requete id"})
